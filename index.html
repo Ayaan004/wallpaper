@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WallVault — Discover and download stunning HD wallpapers. Browse thousands of curated wallpapers powered by Wallhaven.">
+  <title>WallVault — Premium HD Wallpapers</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖼️</text></svg>">
+</head>
+<body>
+
+  <!-- Animated Background Orbs -->
+  <div class="bg-effects">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="logo" id="logo-link">
+        <div class="logo-icon">🖼️</div>
+        <span class="logo-text">Wall<span>Vault</span></span>
+      </a>
+
+      <div class="search-container">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            class="search-input"
+            id="search-input"
+            placeholder="Search wallpapers — nature, abstract, space..."
+            autocomplete="off"
+          >
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <button class="search-btn" id="search-btn">Search</button>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <button class="nav-link active" data-sort="date_added" id="nav-latest">Latest</button>
+        <button class="nav-link" data-sort="toplist" id="nav-toplist">Top</button>
+        <button class="nav-link" data-sort="random" id="nav-random">Random</button>
+        <button class="nav-link" data-sort="hot" id="nav-hot">Hot</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero-section">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Powered by Wallhaven API
+    </div>
+    <h1>Discover Stunning <br><span class="gradient-text">HD Wallpapers</span></h1>
+    <p>Explore a massive collection of beautifully curated wallpapers. Download in multiple resolutions for any device.</p>
+  </section>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-bar-inner">
+      <div class="filter-group">
+        <span class="filter-label">Category</span>
+        <div class="filter-chips" id="category-filters">
+          <button class="filter-chip active" data-cat="111" id="filter-all">All</button>
+          <button class="filter-chip" data-cat="100" id="filter-general">General</button>
+          <button class="filter-chip" data-cat="010" id="filter-anime">Anime</button>
+          <button class="filter-chip" data-cat="001" id="filter-people">People</button>
+        </div>
+      </div>
+
+      <div class="filter-separator"></div>
+
+      <div class="filter-group">
+        <span class="filter-label">Sort</span>
+        <select class="filter-select" id="sort-select">
+          <option value="date_added">Latest</option>
+          <option value="toplist">Top Rated</option>
+          <option value="views">Most Viewed</option>
+          <option value="favorites">Most Favorited</option>
+          <option value="random">Random</option>
+          <option value="hot">Hot</option>
+        </select>
+      </div>
+
+      <div class="filter-separator"></div>
+
+      <div class="filter-group">
+        <span class="filter-label">Ratio</span>
+        <select class="filter-select" id="ratio-select">
+          <option value="">Any</option>
+          <option value="16x9">16 × 9</option>
+          <option value="16x10">16 × 10</option>
+          <option value="21x9">21 × 9 (Ultrawide)</option>
+          <option value="9x16">9 × 16 (Phone)</option>
+          <option value="1x1">1 × 1 (Square)</option>
+          <option value="4x3">4 × 3</option>
+        </select>
+      </div>
+
+      <div class="filter-separator"></div>
+
+      <div class="filter-group">
+        <span class="filter-label">Min Res</span>
+        <select class="filter-select" id="resolution-select">
+          <option value="">Any</option>
+          <option value="1920x1080">1920 × 1080</option>
+          <option value="2560x1440">2560 × 1440</option>
+          <option value="3840x2160">3840 × 2160 (4K)</option>
+          <option value="1280x720">1280 × 720</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="results-header" id="results-header">
+      <span class="results-count" id="results-count"></span>
+    </div>
+    <div class="wallpaper-grid" id="wallpaper-grid">
+      <!-- Wallpaper cards dynamically inserted -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <!-- Modal / Lightbox -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content" id="modal-content">
+      <button class="modal-close" id="modal-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="modal-image-section">
+        <img id="modal-image" src="" alt="Wallpaper Preview">
+      </div>
+
+      <div class="modal-sidebar">
+        <div>
+          <h2 class="modal-title" id="modal-title">Wallpaper Details</h2>
+        </div>
+
+        <div class="modal-detail-group">
+          <span class="modal-detail-label">Resolution</span>
+          <span class="modal-detail-value" id="modal-resolution">—</span>
+        </div>
+
+        <div class="modal-detail-group">
+          <span class="modal-detail-label">Category</span>
+          <span class="modal-detail-value" id="modal-category">—</span>
+        </div>
+
+        <div class="modal-detail-group">
+          <span class="modal-detail-label">File Size</span>
+          <span class="modal-detail-value" id="modal-filesize">—</span>
+        </div>
+
+        <div class="modal-detail-group">
+          <span class="modal-detail-label">Views / Favorites</span>
+          <span class="modal-detail-value" id="modal-stats">—</span>
+        </div>
+
+        <div class="modal-detail-group">
+          <span class="modal-detail-label">Colors</span>
+          <div class="modal-colors" id="modal-colors"></div>
+        </div>
+
+        <div class="modal-detail-group">
+          <span class="modal-detail-label">Tags</span>
+          <div class="modal-tags" id="modal-tags"></div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Wallpaper
+          </h3>
+
+          <div class="size-options" id="size-options">
+            <!-- Size options injected dynamically -->
+          </div>
+
+          <button class="download-btn" id="download-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Selected Size
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scroll-top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>WallVault — Built with ❤️ using the <a href="https://wallhaven.cc/help/api" target="_blank" rel="noopener">Wallhaven API</a>. All images remain property of their original owners.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
